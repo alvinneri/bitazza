@@ -22,6 +22,18 @@ export const AuthApi = {
 
         return socket.send(JSON.stringify(frame)) 
 
+    },
+
+    logoutUser: () => {
+        let frame = {
+            m: 0,
+            i: 2,
+            n: "LogOut",
+            o: "",
+          };
+
+        return socket.send(JSON.stringify(frame)) 
+
     }
 
 }

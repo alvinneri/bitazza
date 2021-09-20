@@ -1,15 +1,16 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import { setLoading } from '../../redux/Public/action'
 import { AuthApi } from '../../api/auth';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
-
+    const dispatch = useDispatch();
     const login = () => {
-
+      dispatch(setLoading(true));
       let payload = {
         username,
         password
