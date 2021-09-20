@@ -1,38 +1,39 @@
 import { useEffect } from "react";
-const socket = new WebSocket("wss://apexapi.bitazza.com/WSGateway");
+import { toast } from "react-toastify";
+import { socket } from "./api";
+import Login from "./pages/Login";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/User/action";
+toast.configure();
 const App = () => {
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     socket.addEventListener("open", function (event) {
-      console.log("Hello Server");
-
-      let param = {
-        Password: "Binbai13!",
-        UserName: "alvin.neri.ece@gmail.com",
-      };
-
-      let frame = {
-        m: 0,
-        i: 2,
-        n: "AuthenticateUser",
-        o: "",
-      };
-
-      frame.o = JSON.stringify(param);
-      socket.send(JSON.stringify(frame));
     });
 
     socket.onmessage = (message) => {
       const _message = JSON.parse(message.data);
+
+
       if (_message.m === 1) {
         if (_message.n === "AuthenticateUser") {
           const response = JSON.parse(_message.o);
-          console.log(response);
+          console.log(response)
+          if(!response.Authenticated){
+            toast.error(response.errormsg)
+          }else{
+            dispatch(setUser(response.User))
+            toast.success('SUCCESS')
+          }
         }
       }
     };
   }, []);
 
-  return <div>Bitazza</div>;
+  return <div><Login/></div>;
 };
 
 export default App;

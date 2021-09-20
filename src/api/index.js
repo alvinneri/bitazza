@@ -1,0 +1,1 @@
+export const socket = new WebSocket("wss://apexapi.bitazza.com/WSGateway");
