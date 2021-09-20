@@ -11,13 +11,11 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import Loader from "./components/Loader";
 import Main from "./pages/Main";
 import { PrivateRoute } from "./components/Routes/PrivateRoute";
-import Navbar from "./components/Navbar";
 toast.configure();
 const App = () => {
 
   const dispatch = useDispatch();
   const {isLoading} = useSelector((state)=> state.public)
-  const {user} = useSelector((state)=> state.user)
   const SessionToken = localStorage.getItem('SessionToken')
   const history = useHistory()
 
@@ -31,7 +29,6 @@ const App = () => {
 
       if (_message.m === 1) {
         if (_message.n === "AuthenticateUser") {
-          console.log(response)
           if(!response.Authenticated){
             toast.error(response.errormsg)
             dispatch(setLoading(false));

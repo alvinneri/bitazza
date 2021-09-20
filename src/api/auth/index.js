@@ -1,3 +1,4 @@
+import { API_CONSTANTS } from "../../constants";
 import { socket } from "../index"
 
 export const AuthApi = {
@@ -14,7 +15,7 @@ export const AuthApi = {
         let frame = {
             m: 0,
             i: 2,
-            n: "AuthenticateUser",
+            n: API_CONSTANTS.AUTH_USER,
             o: "",
           };
 
@@ -28,7 +29,7 @@ export const AuthApi = {
         let frame = {
             m: 0,
             i: 2,
-            n: "LogOut",
+            n: API_CONSTANTS.LOGOUT,
             o: "",
           };
 
