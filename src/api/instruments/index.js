@@ -44,8 +44,6 @@ export const InstrumentsApi = {
 
         frame.o = JSON.stringify(param);
 
-        console.log(frame)
-
         return socket.send(JSON.stringify(frame)) 
 
     },

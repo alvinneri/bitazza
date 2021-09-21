@@ -9,4 +9,10 @@ export const setSelectedInstrument = (payload) => {
         dispatch({ type: 'SET_SELECTED_INSTRUMENT', payload: payload });
         };   
 }
+
+export const setTickerHistories = (payload) => {
+    return function (dispatch) {
+        dispatch({ type: 'SET_TICKER_HISTORIES', payload: payload });
+        };   
+}
   

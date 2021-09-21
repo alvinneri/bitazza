@@ -11,8 +11,9 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import Loader from "./components/Loader";
 import Main from "./pages/Main";
 import { PrivateRoute } from "./components/Routes/PrivateRoute";
-import { setInstruments } from "./redux/Instruments/action";
+import { setInstruments, setTickerHistories} from "./redux/Instruments/action";
 import { InstrumentsApi } from "./api/instruments";
+import { API_CONSTANTS } from "./constants";
 toast.configure();
 const App = () => {
 
@@ -25,9 +26,11 @@ const App = () => {
 
     socket.onmessage = (message) => {
       const _message = JSON.parse(message.data);
+      if(!_message.o){
+        return;
+      }
       const response = JSON.parse(_message.o);
 
-      console.log(message, 'on app component')
 
       if (_message.m === 1) {
         if (_message.n === "AuthenticateUser") {
@@ -52,6 +55,24 @@ const App = () => {
             }
         }else if(_message.n === "GetInstruments"){
           dispatch(setInstruments(response))
+        }else if(_message.n === API_CONSTANTS.GET_TICKER_HISTORY){
+          if(response.length){
+            const firstArray = response[0]
+            const lastArray = response[response.length - 1];
+
+            const fCloseValue = firstArray[4];
+            const id = firstArray[8];
+            const lCloseValue = lastArray[4];
+
+            const percentChange = ((lCloseValue - fCloseValue) / fCloseValue) * 100
+            const payload = {
+              percentChange,
+              id
+            }
+
+
+            dispatch(setTickerHistories(payload))
+          }
         }
       }
     };

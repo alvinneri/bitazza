@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { InstrumentsApi } from '../../api/instruments';
 
 import InstrumentsTable from './Instrument';
 
@@ -11,7 +12,7 @@ const Main = () => {
         <div>
         {instruments.length > 0 ? 
             <div style={{paddingTop: '5em'}}><InstrumentsTable /></div> : null
-        
+
         }
         </div>
     )
