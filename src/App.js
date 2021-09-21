@@ -11,6 +11,8 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import Loader from "./components/Loader";
 import Main from "./pages/Main";
 import { PrivateRoute } from "./components/Routes/PrivateRoute";
+import { setInstruments } from "./redux/Instruments/action";
+import { InstrumentsApi } from "./api/instruments";
 toast.configure();
 const App = () => {
 
@@ -20,12 +22,12 @@ const App = () => {
   const history = useHistory()
 
   useEffect(() => {
-    socket.addEventListener("open", function (event) {
-    });
 
     socket.onmessage = (message) => {
       const _message = JSON.parse(message.data);
       const response = JSON.parse(_message.o);
+
+      console.log(message, 'on app component')
 
       if (_message.m === 1) {
         if (_message.n === "AuthenticateUser") {
@@ -36,6 +38,7 @@ const App = () => {
             // Set user info to store and localstorage
             localStorage.setItem('SessionToken', response.SessionToken);
             localStorage.setItem('User', JSON.stringify(response.User));
+            InstrumentsApi.getInstruments();
             dispatch(setLoading(false));
             history.push('/home');
             toast.success('Logged In Successfully');
@@ -47,6 +50,8 @@ const App = () => {
               localStorage.removeItem('User');
               dispatch(setLoading(false));
             }
+        }else if(_message.n === "GetInstruments"){
+          dispatch(setInstruments(response))
         }
       }
     };
