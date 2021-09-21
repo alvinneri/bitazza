@@ -1,3 +1,12 @@
 body {
   background-color: #121722;
 }
+
+.btn {
+  color: linear-gradient(
+    90deg,
+    rgb(223, 230, 125),
+    rgb(223, 230, 125) 0px,
+    rgb(126, 194, 177) 40%
+  );
+}

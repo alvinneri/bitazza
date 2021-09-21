@@ -21,7 +21,7 @@
       }
       case 'SET_TICKER_HISTORIES': {
         const _newArray = [...state.instruments];
-        const objIndex = _newArray.findIndex((item => item.InstrumentId == payload.id));
+        const objIndex = _newArray.findIndex((item => item.InstrumentId === payload.id));
         _newArray[objIndex].percentChange = payload.percentChange
         return {
           ...state,

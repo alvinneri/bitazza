@@ -12,38 +12,11 @@ import { InstrumentsApi } from '../../../api/instruments';
 import _ from 'underscore';
 import moment from 'moment'
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
-
-
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
-
 const InstrumentsTable = ({toDate, fromDate}) => {
   const classes = useStyles();
-  const {instruments, tickerHistories} = useSelector(state => state.instruments)
+  const {instruments } = useSelector(state => state.instruments)
 
   useEffect(() => {
-      console.log('change')
     instruments.forEach((instruments) => {
 
     let payload = {
@@ -51,16 +24,15 @@ const InstrumentsTable = ({toDate, fromDate}) => {
         fromDate:  moment(fromDate).format('YYYY-MM-DD'),
         toDate: moment(toDate).format('YYYY-MM-DD')
     }
-
         InstrumentsApi.getTickerHistory(payload)
     })
-  },[toDate, fromDate])
+  },[toDate, fromDate, instruments])
 
   const getChange = (id) => {
     const instrument = instruments.filter(item => item.InstrumentId === id )
 
     if(instrument.length && !_.isUndefined(instrument[0].percentChange)){
-        return instrument[0].percentChange.toFixed(2)
+      return `${instrument[0].percentChange.toFixed(2)}%`
     }
     return 'N/A'
   }
@@ -90,5 +62,30 @@ const InstrumentsTable = ({toDate, fromDate}) => {
     </TableContainer>
   );
 }
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 
 export default InstrumentsTable

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { setSelectedInstrument } from '../../../redux/Instruments/action';
@@ -13,36 +11,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { theme } from '../../../theme';
 
 
-
-
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-  formControlContainer: {
-    borderBottom: '1px solid black',
-    width: '100%',
-   
-  },
-  digits: {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    color: theme.palette.common.white
-  },
-  formControl:{
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  label:{
-    color: theme.palette.common.white
-  }
-});
-
 const InstrumentContainer = () => {
 
     const classes = useStyles();
-    const {instruments, selectedInstrument, tickerHistories} = useSelector(state => state.instruments)
+    const {instruments, selectedInstrument} = useSelector(state => state.instruments)
     const [selectedInstrumentId , setSelectedInstrumentId] = useState(instruments[0].InstrumentId)
     const dispatch = useDispatch();
 
@@ -56,7 +28,7 @@ const InstrumentContainer = () => {
     const getChange = (id) => {
       const instrument = instruments.filter(item => item.InstrumentId === id )  
       if(instrument.length && !_.isUndefined(instrument[0].percentChange)){
-          return instrument[0].percentChange.toFixed(2)
+          return `${instrument[0].percentChange.toFixed(2)}%`
       }
       return 'N/A'
     }
@@ -116,5 +88,30 @@ const InstrumentContainer = () => {
     </div>
   );
 }
+
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+  formControlContainer: {
+    borderBottom: '1px solid black',
+    width: '100%',
+   
+  },
+  digits: {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: theme.palette.common.white
+  },
+  formControl:{
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  label:{
+    color: theme.palette.common.white
+  }
+});
+
 
 export default InstrumentContainer

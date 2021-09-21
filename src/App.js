@@ -77,7 +77,7 @@ const App = () => {
         }
       }
     };
-  }, [dispatch]);
+  }, [dispatch, history]);
 
   useEffect(() => {
     dispatch(setLoading(true))
@@ -89,7 +89,7 @@ const App = () => {
       history.push('/login')
       dispatch(setUser(null))
     }
-  }, [SessionToken, dispatch]);
+  }, [SessionToken, dispatch, history]);
 
   return (
     <div>
