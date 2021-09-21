@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./redux/User/action";
 import {setLoading} from './redux/Public/action';
 import { Switch, Route, useHistory } from 'react-router-dom'
+import './App.css'
 
 import Loader from "./components/Loader";
 import Main from "./pages/Main";
@@ -33,7 +34,7 @@ const App = () => {
 
 
       if (_message.m === 1) {
-        if (_message.n === "AuthenticateUser") {
+        if (_message.n === API_CONSTANTS.AUTH_USER) {
           if(!response.Authenticated){
             toast.error(response.errormsg)
             dispatch(setLoading(false));
@@ -46,14 +47,14 @@ const App = () => {
             history.push('/home');
             toast.success('Logged In Successfully');
           }
-        }else if(_message.n === 'LogOut'){
+        }else if(_message.n === API_CONSTANTS.LOGOUT){
             if(response.result){
               history.push('/login');
               localStorage.removeItem('SessionToken');
               localStorage.removeItem('User');
               dispatch(setLoading(false));
             }
-        }else if(_message.n === "GetInstruments"){
+        }else if(_message.n === API_CONSTANTS.GET_INSTRUMENTS){
           dispatch(setInstruments(response))
         }else if(_message.n === API_CONSTANTS.GET_TICKER_HISTORY){
           if(response.length){

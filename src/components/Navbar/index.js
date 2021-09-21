@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import { AuthApi } from '../../api/auth';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../redux/Public/action';
-
+import { useHistory } from 'react-router';
+import logo from '../../assets/img/logo.jpeg'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -23,16 +24,22 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const logout = () => {
     dispatch(setLoading(true));
       AuthApi.logoutUser();
+      history.push('/login');
+      localStorage.removeItem('SessionToken');
+      localStorage.removeItem('User');
+      dispatch(setLoading(false));
   }
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar>  
+        <img style={{width: '50px', marginRight: '1em'}}  alt="Loader" src={logo} />
           <Typography variant="h6" className={classes.title}>
             Bitazza
           </Typography>

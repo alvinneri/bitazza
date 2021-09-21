@@ -10,10 +10,11 @@ import Paper from '@material-ui/core/Paper';
 import { useSelector } from 'react-redux';
 import { InstrumentsApi } from '../../../api/instruments';
 import _ from 'underscore';
+import moment from 'moment'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
   },
   body: {
@@ -37,21 +38,23 @@ const useStyles = makeStyles({
   },
 });
 
-const InstrumentsTable = () => {
+const InstrumentsTable = ({toDate, fromDate}) => {
   const classes = useStyles();
   const {instruments, tickerHistories} = useSelector(state => state.instruments)
 
   useEffect(() => {
+      console.log('change')
     instruments.forEach((instruments) => {
 
     let payload = {
         instrumentId: instruments.InstrumentId,
-        fromDate:  "2018-07-18",
-        toDate: "2021-07-19"
+        fromDate:  moment(fromDate).format('YYYY-MM-DD'),
+        toDate: moment(toDate).format('YYYY-MM-DD')
     }
+
         InstrumentsApi.getTickerHistory(payload)
     })
-  })
+  },[toDate, fromDate])
 
   const getChange = (id) => {
     const instrument = instruments.filter(item => item.InstrumentId === id )
@@ -61,9 +64,6 @@ const InstrumentsTable = () => {
     }
     return 'N/A'
   }
-
-
-
 
   return (
     <TableContainer component={Paper} style={{height: '700px', overflow: 'scroll' , width: '100%'}}>
@@ -75,7 +75,7 @@ const InstrumentsTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {instruments.length && _.sortBy(instruments, 'percentChange' ).map((instrument) => (
+          {instruments.length && _.sortBy(instruments, 'percentChange' ).reverse().map((instrument) => (
             <StyledTableRow key={instrument.InstrumentId}>
               <StyledTableCell component="th" scope="row">
               {`${instrument.Product1Symbol}/${instrument.Product2Symbol}`}

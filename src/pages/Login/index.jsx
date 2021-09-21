@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { setLoading } from '../../redux/Public/action'
 import { AuthApi } from '../../api/auth';
 import { useDispatch } from 'react-redux';
+import logo from '../../assets/img/logo.jpeg'
+import { theme } from '../../theme';
 
 const Login = () => {
 
@@ -20,18 +22,32 @@ const Login = () => {
 
     return (
         <div>
-          <form onSubmit={login} style={{width: '100%', height: '100vh', justifyContent: 'center', alignItems:'center', display: 'flex', flexDirection:'column'}}>    
+
+          <form onSubmit={login} style={{width: '100%', height: '100vh', justifyContent: 'center', alignItems:'center', display: 'flex', flexDirection:'column'}}> 
+          <img src={logo} style={{margin: '1em'}} />   
             <TextField
               variant="outlined"
               type={'email'}
               name={'email'}
               label={'Username'}
               placeholder='Email'
-              style={{margin: '0.5em', width: '400px'}}
+              style={{margin: '0.5em', width: '400px', }}
               onChange={(e) => setUsername(e.target.value)}
+              InputProps={{
+                style: {color: theme.palette.common.white}
+              }}
+              InputLabelProps={{
+                style: {color: theme.palette.common.white}
+              }}
               value={username}
               />
             <TextField
+            InputProps={{
+              style: {color: theme.palette.common.white}
+            }}
+            InputLabelProps={{
+              style: {color: theme.palette.common.white}
+            }}
             variant="outlined"
             label={'Password'}
             type={'password'}
