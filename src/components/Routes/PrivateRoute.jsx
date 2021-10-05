@@ -4,7 +4,6 @@ import Navbar from "../Navbar";
 
 export const PrivateRoute = ({ component, ...rest }) => {
   const user = localStorage.getItem("User");
-
   return user ? (
     <>
       <Route {...rest} component={component} />
