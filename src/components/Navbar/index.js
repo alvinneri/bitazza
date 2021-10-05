@@ -8,7 +8,7 @@ import { AuthApi } from "../../api/auth";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../redux/Public/action";
 import { useHistory } from "react-router";
-import logo from "../../assets/img/logo.jpeg";
+import logo2 from "../../assets/img/logo2.svg";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -38,15 +38,12 @@ const Navbar = () => {
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
           <img
-            style={{ width: "50px", marginRight: "1em" }}
+            style={{ width: "150px", marginRight: "1em" }}
             alt="Loader"
-            src={logo}
+            src={logo2}
           />
-          <Typography variant="h6" className={classes.title}>
-            Bitazza
-          </Typography>
           <Button color="inherit" onClick={logout}>
             Logout
           </Button>
