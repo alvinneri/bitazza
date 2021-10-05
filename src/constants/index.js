@@ -3,5 +3,5 @@ export const API_CONSTANTS = {
   AUTH_USER: "AuthenticateUser",
   LOGOUT: "LogOut",
   GET_INSTRUMENTS: "GetInstruments",
-  GET_TICKER_HISTORY: "GetTickerHistory"
+  GET_TICKER_HISTORY: "GetTickerHistory",
 };
